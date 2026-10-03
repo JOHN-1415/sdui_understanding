@@ -1,0 +1,448 @@
+{
+  "home": {
+    "screenId": "home",
+    "title": "SDUI Dynamic Store",
+    "version": "1.0.0",
+    "updatedAt": "2026-10-02T17:22:42.707Z",
+    "theme": {
+      "primaryColor": "#6366F1",
+      "backgroundColor": "#0F172A",
+      "surfaceColor": "#1E293B",
+      "textColor": "#F8FAFC",
+      "accentColor": "#10B981"
+    },
+    "components": [
+      {
+        "id": "comp_banner_1",
+        "type": "banner",
+        "props": {
+          "badge": "LIMITED TIME DEAL",
+          "title": "Super Weekend Festival 2026",
+          "subtitle": "Get up to 55% OFF on premium gadgets, audio gear & smart accessories.",
+          "imageUrl": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80",
+          "ctaText": "Claim Discount"
+        },
+        "action": {
+          "type": "dialog",
+          "payload": {
+            "message": "Coupon FLASH55 applied! Extra 10% cashback added to your SDUI wallet.",
+            "code": "Coupon FLASH55 applied! Extra 10% cashback added to your SDUI wallet."
+          }
+        },
+        "styles": {
+          "backgroundColor": "#4F46E5",
+          "textColor": "#FFFFFF",
+          "borderRadius": 16,
+          "margin": [
+            8,
+            16,
+            12,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_chips_1",
+        "type": "category_chips",
+        "props": {
+          "selectedIndex": 0,
+          "items": [
+            "All Offers",
+            "Electronics",
+            "Services",
+            "Fashion",
+            "Home Decor",
+            "Gadgets"
+          ]
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "Category chip selected"
+          }
+        },
+        "styles": {
+          "margin": [
+            4,
+            16,
+            12,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_search_1",
+        "type": "search_bar",
+        "props": {
+          "placeholder": "Search 10,000+ items, services & offers...",
+          "showFilter": true
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "Search filter tapped"
+          }
+        },
+        "styles": {
+          "margin": [
+            12,
+            16,
+            8,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_promo_1",
+        "type": "promo_card",
+        "props": {
+          "title": "SDUI Community Voucher",
+          "discount": "FLAT $25 OFF",
+          "code": "SDUI25",
+          "description": "Valid on all orders above $50. Tap copy code to apply instantly.",
+          "expires": "Expires in 48 hours"
+        },
+        "action": {
+          "type": "copy_code",
+          "payload": {
+            "message": "Coupon code 'SDUI25' copied to clipboard!",
+            "code": "SDUI25"
+          }
+        },
+        "styles": {
+          "backgroundColor": "#4F46E5",
+          "textColor": "#FFFFFF",
+          "margin": [
+            4,
+            16,
+            16,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_section_services",
+        "type": "section_title",
+        "props": {
+          "title": "Popular On-Demand Services",
+          "subtitle": "Book certified professionals in 1 click",
+          "actionText": "See All (8)"
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "Viewing full services catalog..."
+          }
+        },
+        "styles": {
+          "margin": [
+            8,
+            16,
+            8,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_grid_1",
+        "type": "service_grid",
+        "props": {
+          "columns": 4,
+          "items": [
+            {
+              "title": "Repairs",
+              "icon": "build",
+              "badge": "Top Rated",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Booking gadget repair service..."
+                }
+              }
+            },
+            {
+              "title": "Cleaning",
+              "icon": "cleaning_services",
+              "badge": "20% OFF",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Deep home cleaning selected!"
+                }
+              }
+            },
+            {
+              "title": "Plumbing",
+              "icon": "plumbing",
+              "badge": null,
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Emergency plumbing service scheduled!"
+                }
+              }
+            },
+            {
+              "title": "Electrician",
+              "icon": "bolt",
+              "badge": "Express",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Express electrician dispatched!"
+                }
+              }
+            }
+          ]
+        },
+        "styles": {
+          "margin": [
+            0,
+            16,
+            12,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_section_trending",
+        "type": "section_title",
+        "props": {
+          "title": "Spotlight Product",
+          "subtitle": "Top rated product of the week",
+          "actionText": "Browse More"
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "Opening trending collections..."
+          }
+        },
+        "styles": {
+          "margin": [
+            4,
+            16,
+            8,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_product_1",
+        "type": "product_card",
+        "props": {
+          "title": "Pro Sound Studio ANC Wireless Headphones",
+          "description": "Active noise cancellation, transparency mode, 45h battery life.",
+          "price": "$129.99",
+          "originalPrice": "$219.00",
+          "rating": "4.9 ?",
+          "reviews": "(1,450)",
+          "tag": "TOP SELLER",
+          "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=700&q=80"
+        },
+        "action": {
+          "type": "dialog",
+          "payload": {
+            "title": "Added to Cart ???",
+            "message": "Pro Sound Studio ANC Headphones ($129.99) added to your cart!"
+          }
+        },
+        "styles": {
+          "margin": [
+            0,
+            16,
+            16,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_section_carousel",
+        "type": "section_title",
+        "props": {
+          "title": "Featured Curations",
+          "subtitle": "Hand-picked categories to explore"
+        },
+        "styles": {
+          "margin": [
+            4,
+            16,
+            8,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_carousel_1",
+        "type": "carousel",
+        "props": {
+          "items": [
+            {
+              "title": "Smart Home",
+              "subtitle": "Next-gen connected living",
+              "imageUrl": "https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80",
+              "tag": "NEW",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Smart Home catalog opened"
+                }
+              }
+            },
+            {
+              "title": "Studio Gear",
+              "subtitle": "Pro audio & microphones",
+              "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&q=80",
+              "tag": "TRENDING",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Studio Gear catalog opened"
+                }
+              }
+            },
+            {
+              "title": "Fitness Tech",
+              "subtitle": "Track workouts & heart rate",
+              "imageUrl": "https://images.unsplash.com/photo-1510519138161-58474ebf8463?w=600&q=80",
+              "tag": "HOT",
+              "action": {
+                "type": "toast",
+                "payload": {
+                  "message": "Fitness Tech catalog opened"
+                }
+              }
+            }
+          ]
+        },
+        "styles": {
+          "margin": [
+            0,
+            0,
+            16,
+            0
+          ]
+        }
+      },
+      {
+        "id": "comp_spacer_1",
+        "type": "spacer",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "id": "comp_button_1",
+        "type": "button_action",
+        "props": {
+          "text": "Explore All Categories & Stores ?",
+          "variant": "primary"
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "Navigating to global store directory..."
+          }
+        },
+        "styles": {
+          "backgroundColor": "#6366F1",
+          "textColor": "#FFFFFF",
+          "margin": [
+            0,
+            16,
+            32,
+            16
+          ]
+        }
+      },
+      {
+        "type": "promo_card",
+        "props": {
+          "title": "Community Voucher",
+          "discount": "FLAT $25 OFF",
+          "code": "SDUI25",
+          "description": "Valid on orders over $50. Tap copy code to apply instantly.",
+          "expires": "Valid until Midnight"
+        },
+        "action": {
+          "type": "copy_code",
+          "payload": {
+            "code": "SDUI25",
+            "message": "Coupon code 'SDUI25' copied to clipboard!"
+          }
+        },
+        "styles": {
+          "backgroundColor": "#059669",
+          "textColor": "#FFFFFF",
+          "margin": [
+            4,
+            16,
+            16,
+            16
+          ]
+        },
+        "id": "comp_promo_card_3389"
+      }
+    ]
+  },
+  "explore": {
+    "screenId": "explore",
+    "title": "Explore & Discover",
+    "version": "1.0.0",
+    "updatedAt": "2026-10-02T14:30:04.048Z",
+    "theme": {
+      "primaryColor": "#EC4899",
+      "backgroundColor": "#0F172A",
+      "surfaceColor": "#1E293B",
+      "textColor": "#F8FAFC",
+      "accentColor": "#F43F5E"
+    },
+    "components": [
+      {
+        "id": "comp_explore_search",
+        "type": "search_bar",
+        "props": {
+          "placeholder": "Discover trending ideas, creators & brands...",
+          "showFilter": false
+        },
+        "styles": {
+          "margin": [
+            12,
+            16,
+            8,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_explore_banner",
+        "type": "banner",
+        "props": {
+          "badge": "FEATURED SPOTLIGHT",
+          "title": "Server-Driven UI 2026",
+          "subtitle": "Change your entire mobile layout and widgets in real-time from the web admin portal without re-releasing the APK!",
+          "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+          "ctaText": "Learn Architecture"
+        },
+        "action": {
+          "type": "dialog",
+          "payload": {
+            "title": "SDUI Power ??",
+            "message": "Server-Driven UI decouples mobile presentation from app releases. Publish from Admin -> Mobile renders instantly!"
+          }
+        },
+        "styles": {
+          "backgroundColor": "#BE185D",
+          "textColor": "#FFFFFF",
+          "borderRadius": 16,
+          "margin": [
+            8,
+            16,
+            16,
+            16
+          ]
+        }
+      }
+    ]
+  }
+}

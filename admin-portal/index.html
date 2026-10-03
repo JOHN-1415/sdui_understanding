@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SDUI Studio - Dual-Mode Admin Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>SDUI Studio <span class="badge-tag">Admin Pro</span></h1>
+          <p class="subtitle">Dual-Mode Server-Driven UI Architecture</p>
+        </div>
+      </div>
+
+      <div class="screen-selector-box">
+        <label for="screenSelect">Active Screen:</label>
+        <select id="screenSelect" class="form-select">
+          <option value="home">Home (home)</option>
+          <option value="explore">Explore (explore)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <!-- Mode Switcher Tabs -->
+      <div class="mode-tabs">
+        <button id="tabModeSplit" class="tab-btn active" title="Split side-by-side mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="12" y1="3" x2="12" y2="21"></line>
+          </svg>
+          Dual Split View
+        </button>
+        <button id="tabModeVisual" class="tab-btn" title="Visual Builder Only">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          Mode B: Visual Builder
+        </button>
+        <button id="tabModeJson" class="tab-btn" title="Raw JSON Editor Only">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          Mode A: Raw JSON
+        </button>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- Server Connection Status -->
+      <div class="server-status-pill" id="serverStatusPill" title="Click to configure backend URL">
+        <span class="status-dot online"></span>
+        <span class="status-text" id="serverStatusText">Local Backend :5000</span>
+      </div>
+
+      <button id="btnSettings" class="btn btn-secondary btn-icon" title="Backend Server Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+
+      <button id="btnDownloadApk" class="btn btn-secondary btn-icon-text" title="Download Mobile APK">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Get APK</span>
+      </button>
+
+      <button id="btnPublish" class="btn btn-primary btn-publish">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span>Publish UI Schema</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Notification Banner / Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Main Work Area -->
+  <main class="main-layout" id="mainLayout">
+    <!-- PANEL 1: Mode A - Raw JSON Schema Upload & Editor -->
+    <section class="panel panel-json" id="panelJson">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="panel-badge mode-a-badge">Mode A</span>
+          <h2>Raw JSON Editor & Uploader</h2>
+          <span id="jsonValidationTag" class="validation-tag valid">Valid JSON</span>
+        </div>
+        <div class="panel-actions">
+          <button id="btnUploadJson" class="btn btn-sm btn-outline" title="Upload JSON file">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            Upload .json
+          </button>
+          <input type="file" id="fileInput" accept=".json" style="display:none;" />
+          <button id="btnFormatJson" class="btn btn-sm btn-outline" title="Beautify JSON formatting">
+            Format
+          </button>
+          <button id="btnCopyJson" class="btn btn-sm btn-outline" title="Copy to clipboard">
+            Copy
+          </button>
+          <button id="btnResetScreen" class="btn btn-sm btn-danger-outline" title="Reset this screen to default">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Drag & Drop Zone -->
+      <div id="dropZone" class="drop-zone">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        <span>Drag & drop a <code>.json</code> schema file here or click Upload</span>
+      </div>
+
+      <!-- Quick Snippet Insert Bar -->
+      <div class="snippet-toolbar">
+        <span class="snippet-label">Quick Snippets:</span>
+        <button class="snippet-pill" data-snippet="banner">+ Banner</button>
+        <button class="snippet-pill" data-snippet="service_grid">+ Service Grid</button>
+        <button class="snippet-pill" data-snippet="promo_card">+ Promo Card</button>
+        <button class="snippet-pill" data-snippet="product_card">+ Product Card</button>
+        <button class="snippet-pill" data-snippet="carousel">+ Carousel</button>
+        <button class="snippet-pill" data-snippet="category_chips">+ Chips</button>
+        <button class="snippet-pill" data-snippet="search_bar">+ Search Bar</button>
+        <button class="snippet-pill" data-snippet="button_action">+ Button</button>
+      </div>
+
+      <!-- JSON Code Editor Area -->
+      <div class="editor-wrapper">
+        <textarea id="rawJsonTextarea" class="code-textarea" spellcheck="false" placeholder="Enter or paste SDUI JSON Schema here..."></textarea>
+      </div>
+      <div id="jsonErrorFooter" class="json-error-footer hidden"></div>
+    </section>
+
+    <!-- PANEL 2: Mode B - Visual Component Arranger -->
+    <section class="panel panel-visual" id="panelVisual">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="panel-badge mode-b-badge">Mode B</span>
+          <h2>Visual Component Arranger</h2>
+          <span id="componentCountBadge" class="count-badge">0 components</span>
+        </div>
+        <div class="panel-actions">
+          <button id="btnCollapseAll" class="btn btn-sm btn-outline">Collapse All</button>
+          <button id="btnExpandAll" class="btn btn-sm btn-outline">Expand All</button>
+        </div>
+      </div>
+
+      <!-- Component Palette with clean SVG icons -->
+      <div class="palette-container">
+        <div class="palette-header">
+          <span>Component Library (Click to add):</span>
+        </div>
+        <div class="palette-grid">
+          <button class="palette-item" data-type="search_bar" title="Add Search Bar">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span class="palette-name">Search Bar</span>
+          </button>
+          <button class="palette-item" data-type="banner" title="Add Hero Banner">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            </span>
+            <span class="palette-name">Banner</span>
+          </button>
+          <button class="palette-item" data-type="category_chips" title="Add Category Chips">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7" cy="7" r="1.5"></circle></svg>
+            </span>
+            <span class="palette-name">Category Chips</span>
+          </button>
+          <button class="palette-item" data-type="section_title" title="Add Section Title">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="14" y2="12"></line><line x1="4" y1="18" x2="18" y2="18"></line></svg>
+            </span>
+            <span class="palette-name">Section Title</span>
+          </button>
+          <button class="palette-item" data-type="service_grid" title="Add Service Grid">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </span>
+            <span class="palette-name">Service Grid</span>
+          </button>
+          <button class="palette-item" data-type="promo_card" title="Add Promo Card">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2"></path><path d="M13 17v2"></path></svg>
+            </span>
+            <span class="palette-name">Promo Voucher</span>
+          </button>
+          <button class="palette-item" data-type="product_card" title="Add Product Card">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </span>
+            <span class="palette-name">Product Card</span>
+          </button>
+          <button class="palette-item" data-type="carousel" title="Add Horizontal Carousel">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m10 15 5-3-5-3v6Z"></path></svg>
+            </span>
+            <span class="palette-name">Carousel</span>
+          </button>
+          <button class="palette-item" data-type="button_action" title="Add Action Button">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+            </span>
+            <span class="palette-name">Action Button</span>
+          </button>
+          <button class="palette-item" data-type="spacer" title="Add Spacer Gap">
+            <span class="palette-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 4 12 8 16 4"></polyline><polyline points="8 20 12 16 16 20"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+            </span>
+            <span class="palette-name">Spacer</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reorderable Component List Canvas -->
+      <div class="canvas-scrollable">
+        <div id="componentCanvas" class="component-canvas">
+          <!-- Dynamic Visual Component Cards Rendered Here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: Live Interactive Mobile Preview Simulator -->
+    <aside class="panel panel-preview" id="panelPreview">
+      <div class="preview-header">
+        <div class="preview-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <h3>Live Mobile Preview</h3>
+        </div>
+        <div class="preview-actions">
+          <button id="btnRefreshPreview" class="btn btn-sm btn-icon" title="Refresh Preview">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Smartphone Device Frame -->
+      <div class="device-viewport">
+        <div class="phone-frame">
+          <!-- Phone Speaker & Camera Notch -->
+          <div class="phone-notch">
+            <div class="notch-camera"></div>
+            <div class="notch-speaker"></div>
+          </div>
+          <!-- Phone Status Bar -->
+          <div class="phone-status-bar">
+            <span class="time" id="deviceTime">09:41</span>
+            <div class="icons">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="18" height="11" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line></svg>
+            </div>
+          </div>
+
+          <!-- Phone App Bar -->
+          <div class="phone-app-bar" id="phoneAppBar">
+            <span class="app-bar-title" id="previewAppTitle">SDUI Store</span>
+            <div class="app-bar-icons">
+              <span class="preview-badge-status">LIVE</span>
+            </div>
+          </div>
+
+          <!-- Phone Screen Dynamic Content (SDUI Render Target) -->
+          <div class="phone-screen-content" id="phoneContent">
+            <!-- SDUI Components parsed into DOM elements -->
+          </div>
+
+          <!-- Phone Home Indicator Bar -->
+          <div class="phone-home-indicator"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Property Inspector Modal / Slide-over Drawer -->
+  <div id="inspectorBackdrop" class="modal-backdrop hidden">
+    <div class="inspector-drawer">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span id="inspectorTypeBadge" class="component-type-tag">banner</span>
+          <h3 id="inspectorTitle">Edit Component Properties</h3>
+        </div>
+        <button id="btnCloseInspector" class="btn-close">&times;</button>
+      </div>
+
+      <div class="drawer-body" id="inspectorFormContent">
+        <!-- Dynamic form generated here for selected component -->
+      </div>
+
+      <div class="drawer-footer">
+        <button id="btnDeleteFromInspector" class="btn btn-danger">Delete Component</button>
+        <button id="btnSaveInspector" class="btn btn-primary">Done & Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings & Backend Config Modal -->
+  <div id="settingsBackdrop" class="modal-backdrop hidden">
+    <div class="settings-modal">
+      <div class="modal-header">
+        <h3>Backend Server & Network Settings</h3>
+        <button id="btnCloseSettings" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="serverUrlInput">SDUI Backend API URL:</label>
+          <input type="text" id="serverUrlInput" class="form-input" value="http://localhost:5000" placeholder="e.g. http://192.168.1.100:5000" />
+          <small class="form-hint">Tip: If testing on Android emulator use <code>http://10.0.2.2:5000</code>. If testing on a physical phone over Wi-Fi, enter your computer's local IP (e.g. <code>http://192.168.x.x:5000</code>).</small>
+        </div>
+
+        <div class="detected-ips-box" id="detectedIpsBox">
+          <label>Detected Server Network Addresses:</label>
+          <div id="detectedIpsList" class="ips-list">Fetching server status...</div>
+        </div>
+
+        <div class="form-group" style="margin-top: 16px;">
+          <button id="btnTestConnection" class="btn btn-secondary">Test Connection</button>
+          <span id="testConnectionResult" class="test-result-badge"></span>
+        </div>
+
+        <hr class="modal-divider" />
+
+        <div class="apk-download-section">
+          <h4>📱 Mobile APK Download</h4>
+          <p>You can download the compiled Flutter SDUI APK directly onto your phone by opening this link on mobile:</p>
+          <div class="apk-link-box">
+            <code id="apkDownloadLink">http://localhost:5000/api/v1/download-apk</code>
+            <a id="btnDirectDownloadLink" href="http://localhost:5000/api/v1/download-apk" class="btn btn-sm btn-primary" target="_blank" download>Download APK File</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnSaveSettings" class="btn btn-primary">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDUI Action Toast/Dialog Preview Simulator Modal -->
+  <div id="actionModalBackdrop" class="modal-backdrop hidden">
+    <div class="action-alert-box">
+      <div class="action-alert-icon">⚡</div>
+      <h3 id="actionModalTitle">Action Triggered</h3>
+      <p id="actionModalMessage">Details payload message here.</p>
+      <button id="btnCloseActionModal" class="btn btn-primary">Dismiss</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

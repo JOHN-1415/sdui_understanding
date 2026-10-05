@@ -693,6 +693,100 @@
       }
     });
 
+    
+    // If component is a composable parent container, render the Nested Children Manager
+    const isParentType = ['container', 'card', 'column', 'row', 'stack'].includes(comp.type);
+    if (isParentType) {
+      if (!Array.isArray(comp.children)) comp.children = [];
+
+      const childrenSection = document.createElement('div');
+      childrenSection.className = 'card-children-section';
+
+      const childItemsHtml = comp.children.length === 0
+        ? '<span class="no-children-hint">Container is empty. Click "+ Add Element" to add Text, Image, Badge, Divider, etc.</span>'
+        : comp.children.map((child, cIdx) => {
+            const cIcon = getComponentIcon(child.type);
+            const cText = child.props?.text || child.props?.title || (child.props?.url ? 'Image' : child.type);
+            return `
+              <span class="child-item-chip">
+                <span>${cIcon} ${escapeHtml(cText)}</span>
+                <button type="button" class="btn-del-child" data-child-idx="${cIdx}" title="Remove this child">×</button>
+              </span>
+            `;
+          }).join('');
+
+      childrenSection.innerHTML = `
+        <div class="children-section-header">
+          <span class="children-title">Inside this ${comp.type} (${comp.children.length}):</span>
+          <div class="child-picker-wrapper">
+            <button type="button" class="btn btn-sm btn-primary btn-add-child-trigger">+ Add Element</button>
+            <div class="child-picker-dropdown hidden">
+              <button type="button" class="child-pick-option" data-child-type="text">𝐓 Text</button>
+              <button type="button" class="child-pick-option" data-child-type="image">🖼️ Image</button>
+              <button type="button" class="child-pick-option" data-child-type="badge">🏷️ Badge</button>
+              <button type="button" class="child-pick-option" data-child-type="divider">┄ Divider</button>
+              <button type="button" class="child-pick-option" data-child-type="row">↔ Flex Row</button>
+              <button type="button" class="child-pick-option" data-child-type="column">↕ Flex Column</button>
+              <button type="button" class="child-pick-option" data-child-type="stack">⧉ Overlap Stack</button>
+              <button type="button" class="child-pick-option" data-child-type="button">🔘 Button</button>
+            </div>
+          </div>
+        </div>
+        <div class="children-items-list">
+          ${childItemsHtml}
+        </div>
+      `;
+
+      // Event listeners for child picker
+      const triggerBtn = childrenSection.querySelector('.btn-add-child-trigger');
+      const dropdown = childrenSection.querySelector('.child-picker-dropdown');
+
+      triggerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Close other dropdowns
+        document.querySelectorAll('.child-picker-dropdown').forEach(d => {
+          if (d !== dropdown) d.classList.add('hidden');
+        });
+        dropdown.classList.toggle('hidden');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        dropdown.classList.add('hidden');
+      });
+
+      // Add child option click
+      childrenSection.querySelectorAll('.child-pick-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdown.classList.add('hidden');
+          const childType = btn.dataset.childType;
+          let template = COMPONENT_TEMPLATES[childType];
+          if (!template) {
+            template = { type: childType, props: { text: `New ${childType}` } };
+          }
+          const newChild = JSON.parse(JSON.stringify(template));
+          newChild.id = `child_${childType}_${Date.now().toString().slice(-4)}`;
+          comp.children.push(newChild);
+          syncState(false);
+          showToast(`Added ${childType} inside ${comp.id}`, 'success');
+        });
+      });
+
+      // Delete child click
+      childrenSection.querySelectorAll('.btn-del-child').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const cIdx = parseInt(btn.dataset.childIdx, 10);
+          comp.children.splice(cIdx, 1);
+          syncState(false);
+          showToast('Removed child component', 'info');
+        });
+      });
+
+      card.appendChild(childrenSection);
+    }
+
     return card;
   }
 

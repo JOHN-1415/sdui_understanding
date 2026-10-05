@@ -1599,3 +1599,108 @@ body {
   display: inline-block;
   margin-left: 6px;
 }
+
+/* ========================================================
+   Visual Nested Children Builder in Mode B
+   ======================================================== */
+.card-children-section {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+.children-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.children-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #94A3B8;
+}
+
+.child-picker-wrapper {
+  position: relative;
+}
+
+.child-picker-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: #1E293B;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  padding: 4px;
+}
+
+.child-picker-dropdown.hidden {
+  display: none !important;
+}
+
+.child-pick-option {
+  background: none;
+  border: none;
+  color: #F8FAFC;
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.child-pick-option:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818CF8;
+}
+
+.children-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.child-item-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  color: #E2E8F0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.child-item-chip .btn-del-child {
+  background: none;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.child-item-chip .btn-del-child:hover {
+  color: #F87171;
+}
+
+.no-children-hint {
+  font-size: 0.72rem;
+  color: #64748B;
+  font-style: italic;
+}

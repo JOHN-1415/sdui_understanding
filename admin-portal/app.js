@@ -47,6 +47,28 @@
 
   // Component Templates for Quick Insertion
   const COMPONENT_TEMPLATES = {
+    image: {
+      type: 'image',
+      props: {
+        url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80',
+        height: 160,
+        fit: 'cover'
+      },
+      styles: { borderRadius: 12, margin: [4, 0, 4, 0] }
+    },
+    button: {
+      type: 'button',
+      props: {
+        text: 'Order Now',
+        variant: 'filled'
+      },
+      styles: {
+        backgroundColor: '#6366F1',
+        textColor: '#FFFFFF',
+        borderRadius: 8
+      },
+      action: { type: 'toast', payload: { message: 'Order button clicked!' } }
+    },
     card_le_smash: {
       type: "container",
       props: { elevation: 4 },
@@ -703,84 +725,66 @@
       childrenSection.className = 'card-children-section';
 
       const childItemsHtml = comp.children.length === 0
-        ? '<span class="no-children-hint">Container is empty. Click "+ Add Element" to add Text, Image, Badge, Divider, etc.</span>'
+        ? '<span class="no-children-hint" style="color: #94A3B8; font-style: italic; font-size: 0.72rem;">Container is empty. Click any button above to add elements inside!</span>'
         : comp.children.map((child, cIdx) => {
             const cIcon = getComponentIcon(child.type);
             const cText = child.props?.text || child.props?.title || (child.props?.url ? 'Image' : child.type);
             return `
               <span class="child-item-chip">
                 <span>${cIcon} ${escapeHtml(cText)}</span>
-                <button type="button" class="btn-del-child" data-child-idx="${cIdx}" title="Remove this child">×</button>
+                <button type="button" class="btn-del-child" data-child-idx="${cIdx}" title="Remove this element">×</button>
               </span>
             `;
           }).join('');
 
       childrenSection.innerHTML = `
         <div class="children-section-header">
-          <span class="children-title">Inside this ${comp.type} (${comp.children.length}):</span>
-          <div class="child-picker-wrapper">
-            <button type="button" class="btn btn-sm btn-primary btn-add-child-trigger">+ Add Element</button>
-            <div class="child-picker-dropdown hidden">
-              <button type="button" class="child-pick-option" data-child-type="text">𝐓 Text</button>
-              <button type="button" class="child-pick-option" data-child-type="image">🖼️ Image</button>
-              <button type="button" class="child-pick-option" data-child-type="badge">🏷️ Badge</button>
-              <button type="button" class="child-pick-option" data-child-type="divider">┄ Divider</button>
-              <button type="button" class="child-pick-option" data-child-type="row">↔ Flex Row</button>
-              <button type="button" class="child-pick-option" data-child-type="column">↕ Flex Column</button>
-              <button type="button" class="child-pick-option" data-child-type="stack">⧉ Overlap Stack</button>
-              <button type="button" class="child-pick-option" data-child-type="button">🔘 Button</button>
-            </div>
-          </div>
+          <span class="children-title">📁 Inside this ${comp.type} (${comp.children.length} elements):</span>
         </div>
-        <div class="children-items-list">
+        <div class="quick-add-child-bar">
+          <span class="quick-add-label">Add inside:</span>
+          <button type="button" class="btn-quick-add" data-child-type="text">𝐓 Text</button>
+          <button type="button" class="btn-quick-add" data-child-type="image">🖼️ Image</button>
+          <button type="button" class="btn-quick-add" data-child-type="badge">🏷️ Badge</button>
+          <button type="button" class="btn-quick-add" data-child-type="divider">┄ Divider</button>
+          <button type="button" class="btn-quick-add" data-child-type="row">↔ Flex Row</button>
+          <button type="button" class="btn-quick-add" data-child-type="column">↕ Flex Column</button>
+          <button type="button" class="btn-quick-add" data-child-type="stack">⧉ Stack</button>
+          <button type="button" class="btn-quick-add" data-child-type="button">🔘 Button</button>
+        </div>
+        <div class="children-items-list" style="margin-top: 6px;">
           ${childItemsHtml}
         </div>
       `;
 
-      // Event listeners for child picker
-      const triggerBtn = childrenSection.querySelector('.btn-add-child-trigger');
-      const dropdown = childrenSection.querySelector('.child-picker-dropdown');
-
-      triggerBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Close other dropdowns
-        document.querySelectorAll('.child-picker-dropdown').forEach(d => {
-          if (d !== dropdown) d.classList.add('hidden');
-        });
-        dropdown.classList.toggle('hidden');
-      });
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', () => {
-        dropdown.classList.add('hidden');
-      });
-
-      // Add child option click
-      childrenSection.querySelectorAll('.child-pick-option').forEach(btn => {
+      // Quick Add Button Event Listeners
+      childrenSection.querySelectorAll('.btn-quick-add').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          dropdown.classList.add('hidden');
           const childType = btn.dataset.childType;
           let template = COMPONENT_TEMPLATES[childType];
           if (!template) {
-            template = { type: childType, props: { text: `New ${childType}` } };
+            template = { type: childType, props: { text: `New ${childType}` }, styles: {} };
           }
           const newChild = JSON.parse(JSON.stringify(template));
           newChild.id = `child_${childType}_${Date.now().toString().slice(-4)}`;
           comp.children.push(newChild);
-          syncState(false);
+
+          renderVisualComponentCanvas();
+          syncVisualToJson();
           showToast(`Added ${childType} inside ${comp.id}`, 'success');
         });
       });
 
-      // Delete child click
+      // Delete Child Button Event Listeners
       childrenSection.querySelectorAll('.btn-del-child').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           const cIdx = parseInt(btn.dataset.childIdx, 10);
-          comp.children.splice(cIdx, 1);
-          syncState(false);
-          showToast('Removed child component', 'info');
+          const removed = comp.children.splice(cIdx, 1)[0];
+          renderVisualComponentCanvas();
+          syncVisualToJson();
+          showToast(`Removed ${removed?.type || 'element'}`, 'info');
         });
       });
 
@@ -890,6 +894,153 @@
 
     // Specific Fields based on Component Type
     switch (comp.type) {
+      case 'container':
+      case 'card':
+        html += `
+          <div class="form-group">
+            <label>Internal Layout Direction:</label>
+            <select class="form-select" id="propLayout">
+              <option value="column" ${comp.props.layout !== 'row' ? 'selected' : ''}>Vertical Column</option>
+              <option value="row" ${comp.props.layout === 'row' ? 'selected' : ''}>Horizontal Row</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Elevation Shadow (0-8):</label>
+              <input type="number" class="form-input" id="propElevation" value="${comp.props.elevation || 2}" min="0" max="8" />
+            </div>
+            <div class="form-group">
+              <label>Border Radius (px):</label>
+              <input type="number" class="form-input" id="propBorderRadius" value="${comp.styles.borderRadius || 14}" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Border Color:</label>
+              <input type="text" class="form-input" id="propBorderColor" value="${escapeHtml(comp.styles.borderColor || '')}" placeholder="e.g. #E2E8F0" />
+            </div>
+            <div class="form-group">
+              <label>Border Width (px):</label>
+              <input type="number" class="form-input" id="propBorderWidth" value="${comp.styles.borderWidth || 1}" min="0" max="10" />
+            </div>
+          </div>
+        `;
+        break;
+
+      case 'text':
+        html += `
+          <div class="form-group">
+            <label>Text Content:</label>
+            <textarea class="form-textarea" rows="2" id="propText">${escapeHtml(comp.props.text || comp.props.content || '')}</textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Font Size (px):</label>
+              <input type="number" class="form-input" id="propFontSize" value="${comp.props.fontSize || 14}" min="8" max="48" />
+            </div>
+            <div class="form-group">
+              <label>Font Weight:</label>
+              <select class="form-select" id="propFontWeight">
+                <option value="normal" ${comp.props.fontWeight === 'normal' || comp.props.fontWeight === '400' ? 'selected' : ''}>Normal (400)</option>
+                <option value="500" ${comp.props.fontWeight === '500' ? 'selected' : ''}>Medium (500)</option>
+                <option value="600" ${comp.props.fontWeight === '600' ? 'selected' : ''}>Semi-Bold (600)</option>
+                <option value="bold" ${comp.props.fontWeight === 'bold' || comp.props.fontWeight === '700' ? 'selected' : ''}>Bold (700)</option>
+                <option value="800" ${comp.props.fontWeight === '800' ? 'selected' : ''}>Extra Bold (800)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Text Color (Hex):</label>
+              <input type="text" class="form-input" id="propTextColor" value="${escapeHtml(comp.props.color || comp.styles.textColor || '#FFFFFF')}" placeholder="#FFFFFF" />
+            </div>
+            <div class="form-group">
+              <label>Text Decoration:</label>
+              <select class="form-select" id="propDecoration">
+                <option value="none" ${!comp.props.decoration || comp.props.decoration === 'none' ? 'selected' : ''}>None</option>
+                <option value="lineThrough" ${comp.props.decoration === 'lineThrough' ? 'selected' : ''}>Strikethrough (Old Price)</option>
+                <option value="underline" ${comp.props.decoration === 'underline' ? 'selected' : ''}>Underline</option>
+              </select>
+            </div>
+          </div>
+        `;
+        break;
+
+      case 'image':
+        html += `
+          <div class="form-group">
+            <label>Network Image URL:</label>
+            <input type="text" class="form-input" id="propImageUrl" value="${escapeHtml(comp.props.url || comp.props.imageUrl || '')}" placeholder="https://..." />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Height (px):</label>
+              <input type="number" class="form-input" id="propHeight" value="${comp.styles.height || comp.props.height || 160}" />
+            </div>
+            <div class="form-group">
+              <label>Fit Mode:</label>
+              <select class="form-select" id="propFit">
+                <option value="cover" ${(comp.props.fit || 'cover') === 'cover' ? 'selected' : ''}>Cover (Crop to fill)</option>
+                <option value="contain" ${comp.props.fit === 'contain' ? 'selected' : ''}>Contain (Letterbox)</option>
+                <option value="fill" ${comp.props.fit === 'fill' ? 'selected' : ''}>Fill (Stretch)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Border Radius (px):</label>
+            <input type="number" class="form-input" id="propBorderRadius" value="${comp.styles.borderRadius || comp.props.borderRadius || 12}" />
+          </div>
+        `;
+        break;
+
+      case 'badge':
+        html += `
+          <div class="form-group">
+            <label>Badge Text:</label>
+            <input type="text" class="form-input" id="propBadgeText" value="${escapeHtml(comp.props.text || '')}" placeholder="e.g. ★ 4.7 or 14% OFF" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Icon Prefix:</label>
+              <select class="form-select" id="propBadgeIcon">
+                <option value="" ${!comp.props.icon ? 'selected' : ''}>None</option>
+                <option value="star" ${comp.props.icon === 'star' ? 'selected' : ''}>★ Star Rating</option>
+                <option value="percent" ${comp.props.icon === 'percent' ? 'selected' : ''}>% Discount</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Font Size (px):</label>
+              <input type="number" class="form-input" id="propFontSize" value="${comp.props.fontSize || 12}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Border Radius (px):</label>
+            <input type="number" class="form-input" id="propBorderRadius" value="${comp.styles.borderRadius || comp.props.borderRadius || 10}" />
+          </div>
+        `;
+        break;
+
+      case 'divider':
+        html += `
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="propDashed" ${comp.props.dashed ? 'checked' : ''} />
+              Dashed Divider Line
+            </label>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Line Thickness (px):</label>
+              <input type="number" class="form-input" id="propThickness" value="${comp.props.thickness || 1}" min="1" max="10" />
+            </div>
+            <div class="form-group">
+              <label>Line Color (Hex):</label>
+              <input type="text" class="form-input" id="propDividerColor" value="${escapeHtml(comp.props.color || comp.styles.borderColor || '#CBD5E1')}" placeholder="#CBD5E1" />
+            </div>
+          </div>
+        `;
+        break;
+
       case 'banner':
         html += `
           <div class="form-group">
@@ -1182,6 +1333,63 @@
 
     const imageUrl = document.getElementById('propImageUrl');
     if (imageUrl) comp.props.imageUrl = imageUrl.value;
+    if (imageUrl) comp.props.url = imageUrl.value;
+
+    const propText = document.getElementById('propText');
+    if (propText) comp.props.text = propText.value;
+
+    const propFontSize = document.getElementById('propFontSize');
+    if (propFontSize) comp.props.fontSize = parseFloat(propFontSize.value) || 14;
+
+    const propFontWeight = document.getElementById('propFontWeight');
+    if (propFontWeight) comp.props.fontWeight = propFontWeight.value;
+
+    const propTextColor = document.getElementById('propTextColor');
+    if (propTextColor) {
+      comp.props.color = propTextColor.value;
+      comp.styles.textColor = propTextColor.value;
+    }
+
+    const propDecoration = document.getElementById('propDecoration');
+    if (propDecoration) comp.props.decoration = propDecoration.value;
+
+    const propHeight = document.getElementById('propHeight');
+    if (propHeight) {
+      const h = parseFloat(propHeight.value);
+      comp.props.height = h;
+      comp.styles.height = h;
+    }
+
+    const propFit = document.getElementById('propFit');
+    if (propFit) comp.props.fit = propFit.value;
+
+    const propLayout = document.getElementById('propLayout');
+    if (propLayout) comp.props.layout = propLayout.value;
+
+    const propElevation = document.getElementById('propElevation');
+    if (propElevation) comp.props.elevation = parseFloat(propElevation.value) || 0;
+
+    const propBorderColor = document.getElementById('propBorderColor');
+    if (propBorderColor) comp.styles.borderColor = propBorderColor.value;
+
+    const propBorderWidth = document.getElementById('propBorderWidth');
+    if (propBorderWidth) comp.styles.borderWidth = parseFloat(propBorderWidth.value) || 1;
+
+    const propBadgeText = document.getElementById('propBadgeText');
+    if (propBadgeText) comp.props.text = propBadgeText.value;
+
+    const propBadgeIcon = document.getElementById('propBadgeIcon');
+    if (propBadgeIcon) comp.props.icon = propBadgeIcon.value;
+
+    const propDashed = document.getElementById('propDashed');
+    if (propDashed) comp.props.dashed = propDashed.checked;
+
+    const propThickness = document.getElementById('propThickness');
+    if (propThickness) comp.props.thickness = parseFloat(propThickness.value) || 1;
+
+    const propDividerColor = document.getElementById('propDividerColor');
+    if (propDividerColor) comp.props.color = propDividerColor.value;
+
 
     const ctaText = document.getElementById('propCtaText');
     if (ctaText) comp.props.ctaText = ctaText.value;

@@ -1,3 +1,14 @@
+
+  function formatCssBox(val) {
+    if (!val) return '';
+    if (typeof val === 'number') return `${val}px`;
+    if (Array.isArray(val)) {
+      if (val.length === 4) return `${val[0]}px ${val[1]}px ${val[2]}px ${val[3]}px`;
+      if (val.length === 2) return `${val[0]}px ${val[1]}px`;
+    }
+    return '';
+  }
+
 /**
  * SDUI Studio - Dual-Mode Admin Architecture Controller
  * Unified Bi-directional State Management between:
@@ -36,6 +47,233 @@
 
   // Component Templates for Quick Insertion
   const COMPONENT_TEMPLATES = {
+    card_le_smash: {
+      type: "container",
+      props: { elevation: 4 },
+      styles: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20,
+        borderColor: "#E2E8F0",
+        borderWidth: 1,
+        margin: [8, 14, 12, 14]
+      },
+      children: [
+        {
+          id: "le_smash_stack",
+          type: "stack",
+          props: { alignment: "bottomLeft" },
+          styles: { borderRadius: 20 },
+          children: [
+            {
+              id: "le_smash_img",
+              type: "image",
+              props: {
+                url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+                fit: "cover",
+                height: 180,
+                gradientOverlay: { colors: ["#00000000", "#10000000", "#E0000000"] }
+              }
+            },
+            {
+              id: "le_smash_title_row",
+              type: "row",
+              props: {
+                position: { bottom: 12, left: 14, right: 14 },
+                mainAxisAlignment: "spaceBetween",
+                crossAxisAlignment: "center"
+              },
+              children: [
+                { id: "le_smash_name", type: "text", props: { text: "Le Smash", fontSize: 22, fontWeight: "800", color: "#FFFFFF" } },
+                { id: "le_smash_rating", type: "badge", props: { text: "4.7", icon: "star", fontSize: 13, fontWeight: "bold", backgroundColor: "#0B6B38", textColor: "#FFFFFF", padding: [4, 8, 4, 8] }, styles: { borderRadius: 14 } }
+              ]
+            }
+          ]
+        },
+        {
+          id: "le_smash_details",
+          type: "container",
+          styles: { padding: [12, 14, 14, 14] },
+          children: [
+            {
+              id: "le_smash_cuisine_row",
+              type: "row",
+              props: { mainAxisAlignment: "spaceBetween" },
+              styles: { margin: [0, 0, 4, 0] },
+              children: [
+                { id: "le_smash_cuisine", type: "text", props: { text: "Asian • Italian", fontSize: 13, color: "#64748B", fontWeight: "500" } },
+                { id: "le_smash_cost", type: "text", props: { text: "₹1000 for two", fontSize: 13, color: "#334155", fontWeight: "600" } }
+              ]
+            },
+            {
+              id: "le_smash_loc_row",
+              type: "row",
+              props: { mainAxisAlignment: "spaceBetween" },
+              styles: { margin: [0, 0, 10, 0] },
+              children: [
+                { id: "le_smash_location", type: "text", props: { text: "Nungambakkam, Chennai", fontSize: 13, color: "#64748B" } },
+                { id: "le_smash_distance", type: "text", props: { text: "7.9 km", fontSize: 13, color: "#334155" } }
+              ]
+            },
+            {
+              id: "le_smash_offer_pill1",
+              type: "container",
+              action: { type: "toast", payload: { message: "Flat 10% off walk-in discount activated!" } },
+              styles: { backgroundColor: "#16A34A", borderRadius: 10, padding: [8, 12, 8, 12], margin: [0, 0, 8, 0] },
+              children: [
+                {
+                  id: "pill1_row",
+                  type: "row",
+                  props: { mainAxisAlignment: "spaceBetween", crossAxisAlignment: "center" },
+                  children: [
+                    {
+                      id: "pill1_left",
+                      type: "row",
+                      props: { mainAxisAlignment: "start", spacing: 6, crossAxisAlignment: "center" },
+                      children: [
+                        { id: "pill1_icon", type: "icon", props: { name: "percent", size: 14, color: "#FFFFFF" } },
+                        { id: "pill1_text", type: "text", props: { text: "Flat 10% off on walk-in", fontSize: 13, fontWeight: "700", color: "#FFFFFF" } }
+                      ]
+                    },
+                    { id: "pill1_more", type: "text", props: { text: "+ 1 more", fontSize: 12, fontWeight: "700", color: "#FFFFFF" } }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "le_smash_offer_pill2",
+              type: "container",
+              action: { type: "toast", payload: { message: "Bank offers will be applied at payment" } },
+              styles: { backgroundColor: "#BBF7D0", borderRadius: 10, padding: [8, 12, 8, 12], margin: [0, 0, 8, 0] },
+              children: [
+                { id: "pill2_text", type: "text", props: { text: "Up to 10% off with bank offers", fontSize: 13, fontWeight: "600", color: "#065F46" } }
+              ]
+            },
+            {
+              id: "le_smash_promo_code",
+              type: "text",
+              action: { type: "copy_code", payload: { code: "PAYTMNEW", message: "Coupon PAYTMNEW copied! Extra ₹125 OFF" } },
+              styles: { margin: [4, 0, 2, 0] },
+              props: { text: "Get extra ₹125 off using PAYTMNEW", fontSize: 13, fontWeight: "600", color: "#4F46E5" }
+            }
+          ]
+        }
+      ]
+    },
+    card_grocery_icecream: {
+      type: "container",
+      props: { elevation: 3 },
+      styles: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: 16,
+        borderColor: "#E2E8F0",
+        borderWidth: 1,
+        width: 190,
+        margin: [8, 14, 12, 14],
+        padding: [10, 10, 12, 10]
+      },
+      children: [
+        {
+          id: "grocery_img_stack",
+          type: "stack",
+          styles: { borderRadius: 14 },
+          children: [
+            {
+              id: "grocery_img",
+              type: "image",
+              props: { url: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=80", height: 160, width: 170, fit: "cover", borderRadius: 14 }
+            },
+            {
+              id: "grocery_add_btn",
+              type: "container",
+              action: { type: "toast", payload: { message: "Added Go Zero Only Vanilla to cart!" } },
+              props: { position: { top: 8, right: 8 } },
+              styles: { backgroundColor: "#F8FAFC", borderColor: "#2563EB", borderWidth: 1.5, borderRadius: 10, padding: [6, 8, 6, 8] },
+              children: [
+                { id: "grocery_add_icon", type: "icon", props: { name: "add", color: "#2563EB", size: 18 } }
+              ]
+            }
+          ]
+        },
+        { id: "grocery_delivery_time", type: "text", styles: { margin: [8, 0, 4, 0] }, props: { text: "26 MINS", fontSize: 11, fontWeight: "800", color: "#71717A" } },
+        { id: "grocery_title", type: "text", styles: { margin: [0, 0, 4, 0] }, props: { text: "Go Zero Only Vanilla Guilt Free...", fontSize: 14, fontWeight: "800", color: "#18181B", maxLines: 2 } },
+        { id: "grocery_unit", type: "text", styles: { margin: [0, 0, 8, 0] }, props: { text: "1 ltr", fontSize: 13, color: "#52525B", fontWeight: "500" } },
+        {
+          id: "grocery_discount_row",
+          type: "row",
+          props: { mainAxisAlignment: "spaceBetween", crossAxisAlignment: "center", spacing: 8 },
+          styles: { margin: [0, 0, 8, 0] },
+          children: [
+            { id: "grocery_discount_text", type: "text", props: { text: "14% OFF", fontSize: 12, fontWeight: "800", color: "#059669" } },
+            { id: "grocery_dashed_line", type: "divider", props: { expanded: true, dashed: true, thickness: 1, color: "#CBD5E1" } }
+          ]
+        },
+        {
+          id: "grocery_price_row",
+          type: "row",
+          props: { mainAxisAlignment: "start", crossAxisAlignment: "center", spacing: 8 },
+          children: [
+            { id: "grocery_price", type: "text", props: { text: "₹212", fontSize: 17, fontWeight: "800", color: "#18181B" } },
+            { id: "grocery_orig_price", type: "text", props: { text: "₹249", fontSize: 13, fontWeight: "500", color: "#94A3B8", decoration: "lineThrough" } }
+          ]
+        }
+      ]
+    },
+    container: {
+      type: "container",
+      props: { elevation: 2 },
+      styles: {
+        backgroundColor: "#1E293B",
+        borderRadius: 12,
+        padding: [12, 12, 12, 12],
+        margin: [8, 16, 8, 16]
+      },
+      children: [
+        { type: "text", props: { text: "Container Header", fontSize: 15, fontWeight: "700", color: "#FFFFFF" } },
+        { type: "text", props: { text: "Add any child primitives inside this container.", fontSize: 12, color: "#94A3B8" } }
+      ]
+    },
+    row: {
+      type: "row",
+      props: { mainAxisAlignment: "spaceBetween", crossAxisAlignment: "center", spacing: 8 },
+      styles: { margin: [4, 16, 4, 16] },
+      children: [
+        { type: "text", props: { text: "Left Column", fontSize: 13, color: "#94A3B8" } },
+        { type: "badge", props: { text: "Right Tag", backgroundColor: "#6366F1", textColor: "#FFFFFF" }, styles: { borderRadius: 8 } }
+      ]
+    },
+    column: {
+      type: "column",
+      props: { spacing: 6, crossAxisAlignment: "start" },
+      styles: { margin: [4, 16, 4, 16] },
+      children: [
+        { type: "text", props: { text: "Primary Heading", fontSize: 16, fontWeight: "bold", color: "#FFFFFF" } },
+        { type: "text", props: { text: "Secondary supporting description text", fontSize: 12, color: "#94A3B8" } }
+      ]
+    },
+    stack: {
+      type: "stack",
+      props: { alignment: "bottomLeft" },
+      styles: { borderRadius: 12, margin: [8, 16, 8, 16] },
+      children: [
+        { type: "image", props: { url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80", height: 140, fit: "cover", borderRadius: 12 } },
+        { type: "badge", props: { position: { top: 8, right: 8 }, text: "HOT", backgroundColor: "#EF4444", textColor: "#FFFFFF" }, styles: { borderRadius: 6 } }
+      ]
+    },
+    text: {
+      type: "text",
+      props: { text: "Custom SDUI Headline", fontSize: 16, fontWeight: "700", color: "#FFFFFF" },
+      styles: { margin: [4, 16, 4, 16] }
+    },
+    badge: {
+      type: "badge",
+      props: { text: "★ 4.8 Rating", icon: "star", backgroundColor: "#0B6B38", textColor: "#FFFFFF", fontSize: 12, fontWeight: "bold" },
+      styles: { borderRadius: 10, margin: [4, 16, 4, 16] }
+    },
+    divider: {
+      type: "divider",
+      props: { dashed: true, thickness: 1, color: "#475569" },
+      styles: { margin: [6, 16, 6, 16] }
+    },
     search_bar: {
       type: 'search_bar',
       props: {
@@ -324,6 +562,18 @@
 
   function getComponentIcon(type) {
     const icons = {
+      card_le_smash: '🍽️',
+      card_grocery_icecream: '🍦',
+      container: '◫',
+      row: '↔',
+      column: '↕',
+      stack: '⧉',
+      image: '🖼️',
+      text: '𝐓',
+      badge: '🏷️',
+      icon: '⭐',
+      divider: '┄',
+      button: '🔘',
       search_bar: '🔍',
       banner: '🖼️',
       category_chips: '🏷️',
@@ -367,6 +617,7 @@
           <div class="card-badges">
             ${comp.action ? `<span class="card-badge">Action: ${comp.action.type}</span>` : ''}
             ${comp.props?.badge ? `<span class="card-badge">${escapeHtml(comp.props.badge)}</span>` : ''}
+            ${comp.children && comp.children.length > 0 ? `<span class="nested-count-pill">${comp.children.length} nested item${comp.children.length === 1 ? '' : 's'}</span>` : ''}
           </div>
         </div>
         <div class="card-toolbar">
@@ -951,11 +1202,281 @@
   }
 
   function createSimulatedWidgetElement(comp, index) {
+    if (!comp) return null;
     const div = document.createElement('div');
     const props = comp.props || {};
     const styles = comp.styles || {};
 
     switch (comp.type) {
+      // Approach 1 Atomic Primitives
+      case 'container':
+      case 'card': {
+        div.className = 'sim-container';
+        if (styles.backgroundColor) div.style.backgroundColor = styles.backgroundColor;
+        if (styles.borderRadius) div.style.borderRadius = `${styles.borderRadius}px`;
+        if (styles.borderColor) {
+          div.style.border = `${styles.borderWidth || 1}px solid ${styles.borderColor}`;
+        }
+        if (styles.width) div.style.width = `${styles.width}px`;
+        if (styles.height) div.style.height = `${styles.height}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        if (styles.padding) div.style.padding = formatCssBox(styles.padding);
+        if (props.elevation) div.style.boxShadow = '0 4px 14px rgba(0,0,0,0.12)';
+
+        div.style.display = 'flex';
+        div.style.flexDirection = props.layout === 'row' ? 'row' : 'column';
+
+        if (comp.children && comp.children.length > 0) {
+          comp.children.forEach(child => {
+            const childEl = createSimulatedWidgetElement(child);
+            if (childEl) div.appendChild(childEl);
+          });
+        }
+
+        if (comp.action) {
+          div.style.cursor = 'pointer';
+          div.onclick = (e) => {
+            e.stopPropagation();
+            triggerSimulatedAction(comp.action, 'Container card tapped');
+          };
+        }
+        break;
+      }
+
+      case 'column': {
+        div.className = 'sim-column';
+        if (props.spacing) div.style.gap = `${props.spacing}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        if (styles.padding) div.style.padding = formatCssBox(styles.padding);
+
+        const crossAlign = { start: 'flex-start', end: 'flex-end', center: 'center', stretch: 'stretch' };
+        div.style.alignItems = crossAlign[props.crossAxisAlignment] || 'flex-start';
+
+        if (comp.children && comp.children.length > 0) {
+          comp.children.forEach(child => {
+            const childEl = createSimulatedWidgetElement(child);
+            if (childEl) div.appendChild(childEl);
+          });
+        }
+        break;
+      }
+
+      case 'row': {
+        div.className = 'sim-row';
+        if (props.spacing) div.style.gap = `${props.spacing}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        if (styles.padding) div.style.padding = formatCssBox(styles.padding);
+
+        const crossAlign = { start: 'flex-start', end: 'flex-end', center: 'center', baseline: 'baseline' };
+        div.style.alignItems = crossAlign[props.crossAxisAlignment] || 'center';
+
+        const mainAlign = { start: 'flex-start', end: 'flex-end', center: 'center', spaceBetween: 'space-between', spaceAround: 'space-around', spaceEvenly: 'space-evenly' };
+        div.style.justifyContent = mainAlign[props.mainAxisAlignment] || 'space-between';
+
+        if (comp.children && comp.children.length > 0) {
+          comp.children.forEach(child => {
+            const childEl = createSimulatedWidgetElement(child);
+            if (childEl) {
+              if (child.props?.expanded || child.props?.flex) {
+                childEl.style.flex = `${child.props.flex || 1}`;
+              }
+              div.appendChild(childEl);
+            }
+          });
+        }
+        break;
+      }
+
+      case 'stack': {
+        div.className = 'sim-stack';
+        if (styles.borderRadius) div.style.borderRadius = `${styles.borderRadius}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+
+        if (comp.children && comp.children.length > 0) {
+          comp.children.forEach(child => {
+            const childEl = createSimulatedWidgetElement(child);
+            if (childEl) {
+              const pos = child.props?.position;
+              if (pos) {
+                childEl.style.position = 'absolute';
+                if (pos.top !== undefined) childEl.style.top = `${pos.top}px`;
+                if (pos.bottom !== undefined) childEl.style.bottom = `${pos.bottom}px`;
+                if (pos.left !== undefined) childEl.style.left = `${pos.left}px`;
+                if (pos.right !== undefined) childEl.style.right = `${pos.right}px`;
+                childEl.style.zIndex = '2';
+              }
+              div.appendChild(childEl);
+            }
+          });
+        }
+        break;
+      }
+
+      case 'image': {
+        div.className = 'sim-image-box';
+        const url = props.url || props.imageUrl;
+        const widthVal = styles.width || props.width;
+        const heightVal = styles.height || props.height || 160;
+        div.style.width = widthVal ? `${widthVal}px` : '100%';
+        div.style.height = `${heightVal}px`;
+
+        const br = styles.borderRadius || props.borderRadius;
+        if (br) div.style.borderRadius = `${br}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+
+        if (url) {
+          const img = document.createElement('img');
+          img.src = url;
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = props.fit || 'cover';
+          img.style.display = 'block';
+          if (br) img.style.borderRadius = `${br}px`;
+          div.appendChild(img);
+        }
+
+        if (props.gradientOverlay) {
+          const overlay = document.createElement('div');
+          overlay.className = 'sim-gradient-overlay';
+          const colors = props.gradientOverlay.colors || ['rgba(0,0,0,0)', 'rgba(0,0,0,0.8)'];
+          overlay.style.background = `linear-gradient(to bottom, ${colors.join(', ')})`;
+          div.appendChild(overlay);
+        }
+
+        if (comp.action) {
+          div.style.cursor = 'pointer';
+          div.onclick = (e) => {
+            e.stopPropagation();
+            triggerSimulatedAction(comp.action, 'Image tapped');
+          };
+        }
+        break;
+      }
+
+      case 'text': {
+        div.textContent = props.text || props.content || '';
+        div.style.fontSize = `${props.fontSize || 14}px`;
+        div.style.fontWeight = props.fontWeight || '400';
+        div.style.color = props.color || styles.textColor || '#18181B';
+        if (props.decoration === 'lineThrough') div.style.textDecoration = 'line-through';
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        if (styles.padding) div.style.padding = formatCssBox(styles.padding);
+
+        if (props.maxLines) {
+          div.style.display = '-webkit-box';
+          div.style.webkitLineClamp = `${props.maxLines}`;
+          div.style.webkitBoxOrient = 'vertical';
+          div.style.overflow = 'hidden';
+        }
+
+        if (comp.action) {
+          div.style.cursor = 'pointer';
+          div.onclick = (e) => {
+            e.stopPropagation();
+            triggerSimulatedAction(comp.action, props.text || 'Text tapped');
+          };
+        }
+        break;
+      }
+
+      case 'badge': {
+        div.className = 'sim-badge-pill';
+        div.style.backgroundColor = styles.backgroundColor || props.backgroundColor || '#10B981';
+        div.style.color = styles.textColor || props.textColor || '#FFFFFF';
+        div.style.borderRadius = `${styles.borderRadius || props.borderRadius || 12}px`;
+        div.style.padding = formatCssBox(styles.padding || props.padding) || '4px 8px';
+        div.style.fontSize = `${props.fontSize || 12}px`;
+        div.style.fontWeight = props.fontWeight || '700';
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+
+        let iconSvg = '';
+        if (props.icon === 'star') iconSvg = '★ ';
+        else if (props.icon === 'percent') iconSvg = '% ';
+        else if (props.icon) iconSvg = '• ';
+
+        div.textContent = `${iconSvg}${props.text || ''}`;
+
+        if (comp.action) {
+          div.style.cursor = 'pointer';
+          div.onclick = (e) => {
+            e.stopPropagation();
+            triggerSimulatedAction(comp.action, props.text || 'Badge tapped');
+          };
+        }
+        break;
+      }
+
+      case 'icon': {
+        const iconName = props.name || 'widgets';
+        const iconSize = props.size || 18;
+        const iconColor = props.color || styles.textColor || '#2563EB';
+
+        div.style.display = 'inline-flex';
+        div.style.alignItems = 'center';
+        div.style.justifyContent = 'center';
+
+        if (iconName === 'add' || iconName === 'plus') {
+          div.innerHTML = `<svg width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`;
+        } else if (iconName === 'star') {
+          div.innerHTML = `<span style="color:${iconColor}; font-size:${iconSize}px;">★</span>`;
+        } else if (iconName === 'percent') {
+          div.innerHTML = `<span style="color:${iconColor}; font-size:${iconSize}px; font-weight:800;">%</span>`;
+        } else {
+          div.innerHTML = `<span style="color:${iconColor}; font-size:${iconSize}px;">•</span>`;
+        }
+
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        if (styles.padding) div.style.padding = formatCssBox(styles.padding);
+
+        if (comp.action) {
+          div.style.cursor = 'pointer';
+          div.onclick = (e) => {
+            e.stopPropagation();
+            triggerSimulatedAction(comp.action, 'Icon clicked');
+          };
+        }
+        break;
+      }
+
+      case 'divider': {
+        if (props.dashed) {
+          div.className = 'sim-dashed-line';
+        } else {
+          div.className = 'sim-solid-line';
+        }
+        div.style.borderColor = props.color || styles.borderColor || '#CBD5E1';
+        div.style.borderBottomWidth = `${props.thickness || 1}px`;
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        break;
+      }
+
+      case 'button': {
+        const btn = document.createElement('button');
+        btn.textContent = props.text || 'Button';
+        btn.style.padding = formatCssBox(styles.padding) || '6px 14px';
+        btn.style.borderRadius = `${styles.borderRadius || 8}px`;
+        btn.style.cursor = 'pointer';
+        btn.style.fontWeight = props.fontWeight || '700';
+
+        if (props.variant === 'outline') {
+          btn.style.background = 'transparent';
+          btn.style.border = `1.5px solid ${styles.backgroundColor || '#6366F1'}`;
+          btn.style.color = styles.backgroundColor || '#6366F1';
+        } else {
+          btn.style.background = styles.backgroundColor || '#6366F1';
+          btn.style.border = 'none';
+          btn.style.color = styles.textColor || '#FFFFFF';
+        }
+
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          triggerSimulatedAction(comp.action, props.text || 'Button clicked');
+        };
+        div.appendChild(btn);
+        if (styles.margin) div.style.margin = formatCssBox(styles.margin);
+        break;
+      }
+
       case 'search_bar': {
         div.className = 'sim-search-bar';
         div.innerHTML = `

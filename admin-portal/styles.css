@@ -1514,3 +1514,88 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.22);
 }
+
+/* ========================================================
+   Approach 1: Composable Atomic Primitives Simulation
+   ======================================================== */
+.sim-container {
+  box-sizing: border-box;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  display: flex;
+}
+
+.sim-container:hover {
+  outline: 1.5px dashed rgba(99, 102, 241, 0.4);
+}
+
+.sim-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sim-row {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sim-stack {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sim-image-box {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sim-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sim-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.sim-dashed-line {
+  border-bottom: 1.5px dashed;
+  width: 100%;
+  height: 0;
+  box-sizing: border-box;
+}
+
+.sim-solid-line {
+  border-bottom: 1px solid;
+  width: 100%;
+  height: 0;
+  box-sizing: border-box;
+}
+
+.nested-count-pill {
+  font-size: 0.65rem;
+  background: rgba(99, 102, 241, 0.2);
+  color: #818CF8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 6px;
+}

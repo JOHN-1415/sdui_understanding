@@ -124,13 +124,14 @@ class SDUITheme {
   }
 }
 
-/// SDUI Component
+/// SDUI Component (Supports recursive tree-nesting for Approach 1 Composable Primitives)
 class SDUIComponent {
   final String id;
   final String type;
   final Map<String, dynamic> props;
   final SDUIAction? action;
   final SDUIStyles styles;
+  final List<SDUIComponent> children;
 
   SDUIComponent({
     required this.id,
@@ -138,15 +139,18 @@ class SDUIComponent {
     required this.props,
     this.action,
     required this.styles,
+    this.children = const [],
   });
 
   factory SDUIComponent.fromJson(Map<String, dynamic> json) {
+    final rawChildren = json['children'] as List<dynamic>? ?? [];
     return SDUIComponent(
       id: json['id']?.toString() ?? 'comp_${DateTime.now().millisecondsSinceEpoch}',
       type: json['type']?.toString() ?? 'unknown',
       props: json['props'] as Map<String, dynamic>? ?? {},
       action: json['action'] != null ? SDUIAction.fromJson(json['action'] as Map<String, dynamic>) : null,
       styles: SDUIStyles.fromJson(json['styles'] as Map<String, dynamic>? ?? {}),
+      children: rawChildren.map((c) => SDUIComponent.fromJson(c as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -157,6 +161,7 @@ class SDUIComponent {
       'props': props,
       if (action != null) 'action': action!.toJson(),
       'styles': styles.toJson(),
+      if (children.isNotEmpty) 'children': children.map((c) => c.toJson()).toList(),
     };
   }
 }
@@ -190,14 +195,22 @@ class SDUIAction {
 class SDUIStyles {
   final Color? backgroundColor;
   final Color? textColor;
+  final Color? borderColor;
+  final double? borderWidth;
   final double? borderRadius;
+  final double? width;
+  final double? height;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
 
   SDUIStyles({
     this.backgroundColor,
     this.textColor,
+    this.borderColor,
+    this.borderWidth,
     this.borderRadius,
+    this.width,
+    this.height,
     this.margin,
     this.padding,
   });
@@ -206,7 +219,11 @@ class SDUIStyles {
     return SDUIStyles(
       backgroundColor: json['backgroundColor'] != null ? parseHexColor(json['backgroundColor']) : null,
       textColor: json['textColor'] != null ? parseHexColor(json['textColor']) : null,
+      borderColor: json['borderColor'] != null ? parseHexColor(json['borderColor']) : null,
+      borderWidth: json['borderWidth'] != null ? (json['borderWidth'] as num).toDouble() : null,
       borderRadius: json['borderRadius'] != null ? (json['borderRadius'] as num).toDouble() : null,
+      width: json['width'] != null ? (json['width'] as num).toDouble() : null,
+      height: json['height'] != null ? (json['height'] as num).toDouble() : null,
       margin: parseEdgeInsets(json['margin']),
       padding: parseEdgeInsets(json['padding']),
     );
@@ -216,7 +233,11 @@ class SDUIStyles {
     return {
       if (backgroundColor != null) 'backgroundColor': '#${backgroundColor!.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}',
       if (textColor != null) 'textColor': '#${textColor!.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}',
+      if (borderColor != null) 'borderColor': '#${borderColor!.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}',
+      if (borderWidth != null) 'borderWidth': borderWidth,
       if (borderRadius != null) 'borderRadius': borderRadius,
+      if (width != null) 'width': width,
+      if (height != null) 'height': height,
     };
   }
 }

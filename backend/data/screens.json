@@ -3,7 +3,7 @@
     "screenId": "home",
     "title": "SDUI Dynamic Store",
     "version": "1.0.0",
-    "updatedAt": "2026-10-02T17:22:42.707Z",
+    "updatedAt": "2026-10-05T04:55:27.414Z",
     "theme": {
       "primaryColor": "#6366F1",
       "backgroundColor": "#0F172A",
@@ -12,6 +12,582 @@
       "accentColor": "#10B981"
     },
     "components": [
+      {
+        "id": "comp_section_composable",
+        "type": "section_title",
+        "props": {
+          "title": "Approach 1: Custom Cards",
+          "subtitle": "Built with composable atomic primitives",
+          "actionText": "Live Edit"
+        },
+        "action": {
+          "type": "toast",
+          "payload": {
+            "message": "These cards are built with Lego-block primitives!"
+          }
+        },
+        "styles": {
+          "margin": [
+            8,
+            16,
+            4,
+            16
+          ]
+        }
+      },
+      {
+        "id": "comp_card_le_smash",
+        "type": "container",
+        "props": {
+          "elevation": 4
+        },
+        "styles": {
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 20,
+          "borderColor": "#E2E8F0",
+          "borderWidth": 1,
+          "margin": [
+            8,
+            14,
+            12,
+            14
+          ]
+        },
+        "children": [
+          {
+            "id": "le_smash_stack",
+            "type": "stack",
+            "props": {
+              "alignment": "bottomLeft"
+            },
+            "styles": {
+              "borderRadius": 20
+            },
+            "children": [
+              {
+                "id": "le_smash_img",
+                "type": "image",
+                "props": {
+                  "url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
+                  "fit": "cover",
+                  "height": 180,
+                  "gradientOverlay": {
+                    "colors": [
+                      "#00000000",
+                      "#10000000",
+                      "#E0000000"
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "le_smash_title_row",
+                "type": "row",
+                "props": {
+                  "position": {
+                    "bottom": 12,
+                    "left": 14,
+                    "right": 14
+                  },
+                  "mainAxisAlignment": "spaceBetween",
+                  "crossAxisAlignment": "center"
+                },
+                "children": [
+                  {
+                    "id": "le_smash_name",
+                    "type": "text",
+                    "props": {
+                      "text": "Le Smash",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "color": "#FFFFFF"
+                    }
+                  },
+                  {
+                    "id": "le_smash_rating",
+                    "type": "badge",
+                    "props": {
+                      "text": "4.7",
+                      "icon": "star",
+                      "fontSize": 13,
+                      "fontWeight": "bold",
+                      "backgroundColor": "#0B6B38",
+                      "textColor": "#FFFFFF",
+                      "padding": [
+                        4,
+                        8,
+                        4,
+                        8
+                      ]
+                    },
+                    "styles": {
+                      "borderRadius": 14
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "le_smash_details",
+            "type": "container",
+            "styles": {
+              "padding": [
+                12,
+                14,
+                14,
+                14
+              ]
+            },
+            "children": [
+              {
+                "id": "le_smash_cuisine_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "spaceBetween"
+                },
+                "styles": {
+                  "margin": [
+                    0,
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                "children": [
+                  {
+                    "id": "le_smash_cuisine",
+                    "type": "text",
+                    "props": {
+                      "text": "Asian • Italian",
+                      "fontSize": 13,
+                      "color": "#64748B",
+                      "fontWeight": "500"
+                    }
+                  },
+                  {
+                    "id": "le_smash_cost",
+                    "type": "text",
+                    "props": {
+                      "text": "₹1000 for two",
+                      "fontSize": 13,
+                      "color": "#334155",
+                      "fontWeight": "600"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "le_smash_loc_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "spaceBetween"
+                },
+                "styles": {
+                  "margin": [
+                    0,
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                "children": [
+                  {
+                    "id": "le_smash_location",
+                    "type": "text",
+                    "props": {
+                      "text": "Nungambakkam, Chennai",
+                      "fontSize": 13,
+                      "color": "#64748B"
+                    }
+                  },
+                  {
+                    "id": "le_smash_distance",
+                    "type": "text",
+                    "props": {
+                      "text": "7.9 km",
+                      "fontSize": 13,
+                      "color": "#334155"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "le_smash_offer_pill1",
+                "type": "container",
+                "action": {
+                  "type": "toast",
+                  "payload": {
+                    "message": "Flat 10% off walk-in discount activated!"
+                  }
+                },
+                "styles": {
+                  "backgroundColor": "#16A34A",
+                  "borderRadius": 10,
+                  "padding": [
+                    8,
+                    12,
+                    8,
+                    12
+                  ],
+                  "margin": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ]
+                },
+                "children": [
+                  {
+                    "id": "pill1_row",
+                    "type": "row",
+                    "props": {
+                      "mainAxisAlignment": "spaceBetween",
+                      "crossAxisAlignment": "center"
+                    },
+                    "children": [
+                      {
+                        "id": "pill1_left",
+                        "type": "row",
+                        "props": {
+                          "mainAxisAlignment": "start",
+                          "spacing": 6,
+                          "crossAxisAlignment": "center"
+                        },
+                        "children": [
+                          {
+                            "id": "pill1_icon",
+                            "type": "icon",
+                            "props": {
+                              "name": "percent",
+                              "size": 14,
+                              "color": "#FFFFFF"
+                            }
+                          },
+                          {
+                            "id": "pill1_text",
+                            "type": "text",
+                            "props": {
+                              "text": "Flat 10% off on walk-in",
+                              "fontSize": 13,
+                              "fontWeight": "700",
+                              "color": "#FFFFFF"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "pill1_more",
+                        "type": "text",
+                        "props": {
+                          "text": "+ 1 more",
+                          "fontSize": 12,
+                          "fontWeight": "700",
+                          "color": "#FFFFFF"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "le_smash_offer_pill2",
+                "type": "container",
+                "action": {
+                  "type": "toast",
+                  "payload": {
+                    "message": "Bank offers will be applied at payment"
+                  }
+                },
+                "styles": {
+                  "backgroundColor": "#BBF7D0",
+                  "borderRadius": 10,
+                  "padding": [
+                    8,
+                    12,
+                    8,
+                    12
+                  ],
+                  "margin": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ]
+                },
+                "children": [
+                  {
+                    "id": "pill2_text",
+                    "type": "text",
+                    "props": {
+                      "text": "Up to 10% off with bank offers",
+                      "fontSize": 13,
+                      "fontWeight": "600",
+                      "color": "#065F46"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "le_smash_promo_code",
+                "type": "text",
+                "action": {
+                  "type": "copy_code",
+                  "payload": {
+                    "code": "PAYTMNEW",
+                    "message": "Coupon PAYTMNEW copied! Extra ₹125 OFF"
+                  }
+                },
+                "styles": {
+                  "margin": [
+                    4,
+                    0,
+                    2,
+                    0
+                  ]
+                },
+                "props": {
+                  "text": "Get extra ₹125 off using PAYTMNEW",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "color": "#4F46E5"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "comp_grocery_wrapper",
+        "type": "row",
+        "props": {
+          "mainAxisAlignment": "start",
+          "spacing": 12
+        },
+        "styles": {
+          "margin": [
+            0,
+            4,
+            8,
+            4
+          ]
+        },
+        "children": [
+          {
+            "id": "comp_card_grocery_icecream",
+            "type": "container",
+            "props": {
+              "elevation": 3
+            },
+            "styles": {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": 16,
+              "borderColor": "#E2E8F0",
+              "borderWidth": 1,
+              "width": 190,
+              "margin": [
+                8,
+                14,
+                12,
+                14
+              ],
+              "padding": [
+                10,
+                10,
+                12,
+                10
+              ]
+            },
+            "children": [
+              {
+                "id": "grocery_img_stack",
+                "type": "stack",
+                "styles": {
+                  "borderRadius": 14
+                },
+                "children": [
+                  {
+                    "id": "grocery_img",
+                    "type": "image",
+                    "props": {
+                      "url": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=80",
+                      "height": 160,
+                      "width": 170,
+                      "fit": "cover",
+                      "borderRadius": 14
+                    }
+                  },
+                  {
+                    "id": "grocery_add_btn",
+                    "type": "container",
+                    "action": {
+                      "type": "toast",
+                      "payload": {
+                        "message": "Added Go Zero Only Vanilla to cart!"
+                      }
+                    },
+                    "props": {
+                      "position": {
+                        "top": 8,
+                        "right": 8
+                      }
+                    },
+                    "styles": {
+                      "backgroundColor": "#F8FAFC",
+                      "borderColor": "#2563EB",
+                      "borderWidth": 1.5,
+                      "borderRadius": 10,
+                      "padding": [
+                        6,
+                        8,
+                        6,
+                        8
+                      ]
+                    },
+                    "children": [
+                      {
+                        "id": "grocery_add_icon",
+                        "type": "icon",
+                        "props": {
+                          "name": "add",
+                          "color": "#2563EB",
+                          "size": 18
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "grocery_delivery_time",
+                "type": "text",
+                "styles": {
+                  "margin": [
+                    8,
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                "props": {
+                  "text": "26 MINS",
+                  "fontSize": 11,
+                  "fontWeight": "800",
+                  "color": "#71717A"
+                }
+              },
+              {
+                "id": "grocery_title",
+                "type": "text",
+                "styles": {
+                  "margin": [
+                    0,
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                "props": {
+                  "text": "Go Zero Only Vanilla Guilt Free...",
+                  "fontSize": 14,
+                  "fontWeight": "800",
+                  "color": "#18181B",
+                  "maxLines": 2
+                }
+              },
+              {
+                "id": "grocery_unit",
+                "type": "text",
+                "styles": {
+                  "margin": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ]
+                },
+                "props": {
+                  "text": "1 ltr",
+                  "fontSize": 13,
+                  "color": "#52525B",
+                  "fontWeight": "500"
+                }
+              },
+              {
+                "id": "grocery_discount_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "spaceBetween",
+                  "crossAxisAlignment": "center",
+                  "spacing": 8
+                },
+                "styles": {
+                  "margin": [
+                    0,
+                    0,
+                    8,
+                    0
+                  ]
+                },
+                "children": [
+                  {
+                    "id": "grocery_discount_text",
+                    "type": "text",
+                    "props": {
+                      "text": "14% OFF",
+                      "fontSize": 12,
+                      "fontWeight": "800",
+                      "color": "#059669"
+                    }
+                  },
+                  {
+                    "id": "grocery_dashed_line",
+                    "type": "divider",
+                    "props": {
+                      "expanded": true,
+                      "dashed": true,
+                      "thickness": 1,
+                      "color": "#CBD5E1"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "grocery_price_row",
+                "type": "row",
+                "props": {
+                  "mainAxisAlignment": "start",
+                  "crossAxisAlignment": "center",
+                  "spacing": 8
+                },
+                "children": [
+                  {
+                    "id": "grocery_price",
+                    "type": "text",
+                    "props": {
+                      "text": "₹212",
+                      "fontSize": 17,
+                      "fontWeight": "800",
+                      "color": "#18181B"
+                    }
+                  },
+                  {
+                    "id": "grocery_orig_price",
+                    "type": "text",
+                    "props": {
+                      "text": "₹249",
+                      "fontSize": 13,
+                      "fontWeight": "500",
+                      "color": "#94A3B8",
+                      "decoration": "lineThrough"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       {
         "id": "comp_banner_1",
         "type": "banner",
